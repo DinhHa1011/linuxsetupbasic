@@ -1,7 +1,7 @@
 
 ##NOTE FOR VTAEDHA
-### Hướng dẫn cài đặt IBus Bamboo - Bộ gõ tiếng Việt cho Linux
-### Ubuntu và các distro tương tự
+
+###IBus Bamboo - Bộ gõ tiếng Việt cho Linux
 
 ```sh
 sudo add-apt-repository ppa:bamboo-engine/ibus-bamboo
