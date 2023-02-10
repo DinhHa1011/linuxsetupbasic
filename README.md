@@ -1,7 +1,7 @@
 
-##NOTE FOR VTAEDHA
+## NOTE FOR VTAEDHA
 
-###IBus Bamboo - Bộ gõ tiếng Việt cho Linux
+### IBus Bamboo - Bộ gõ tiếng Việt cho Linux
 
 ```sh
 sudo add-apt-repository ppa:bamboo-engine/ibus-bamboo
