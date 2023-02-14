@@ -24,3 +24,12 @@ sudo apt-get install notepadqq
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
 ```
+
+### Office 2010 via playonlinux
+Link download Office Setup: https://archive.org/download/sw-dvd-5-office-professional-plus-2010-w-32-english-mlf-x-16-52536/SW_DVD5_Office_Professional_Plus_2010_W32_English_MLF_X16-52536.ISO
+```sh
+sudo apt-get install playonlinux
+```
+Tải file ISO trên về giải nén ra (click chuột phải file chọn exact here) 
+Mở playonlinux -> Install a program -> gõ office tìm tới office 2010 -> install -> browser setup file chọn về setup.exe trong thư mục mới giải nén file ISO trên 
+Next chờ playonlinux tự xử. 
