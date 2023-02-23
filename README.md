@@ -34,3 +34,59 @@ sudo apt-get install playonlinux
 Tải file ISO trên về giải nén ra (click chuột phải file chọn exact here) 
 Mở playonlinux -> Install a program -> gõ office tìm tới office 2010 -> install -> browser setup file chọn về setup.exe trong thư mục mới giải nén file ISO trên 
 Next chờ playonlinux tự xử. 
+
+### Generate a Public Key from a Private Key Using ssh-keygen
+
+```sh
+ ssh-keygen -f <PRIVATE_KEY_FILE>.pem -y
+```
+### Create a pem file to login without password and without copy local keys to remote server
+
+1. Login with account user (not root)
+
+```
+mkdir pem
+cd pem
+ssh-keygen -b 2048 -f identity -t rsa
+```
+
+2. Copy public key contents to authorized_keys
+
+```
+cat identity.pub >> ~/.ssh/authorized_keys
+```
+
+3. Disable Password Authentication
+
+```
+sudo nano /etc/ssh/sshd_config
+```
+
+Change to no to disable tunnelled clear text passwords
+
+PasswordAuthentication no
+
+4. Restart SSH
+
+```
+sudo service ssh restart
+```
+
+5. Download your private key to client side
+
+```
+cat ~/.ssh/pem/identity
+```
+
+6. Set permission for pem on your local
+
+```
+sudo chmod 600 identity.pem
+```
+
+7. Test login
+
+```
+ssh -i identity.pem user@vps-ip
+```
+
