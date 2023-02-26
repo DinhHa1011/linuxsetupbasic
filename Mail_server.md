@@ -287,7 +287,7 @@ vi /etc/dovecot/conf.d/auth-sql.conf.ext
 * Comment lines 19,20,21,22
 * Uncomment 27,28,29,30 
 * Edit line 29: 
-args = uid=vmail home=/var/vmail/%d/%n
+args = uid=vmail gid=vmail home=/var/vmail/%d/%n
 
 vi /etc/dovecot/conf.d/10-master.conf
 * Link to sample file
