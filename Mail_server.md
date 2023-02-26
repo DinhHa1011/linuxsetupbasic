@@ -7,8 +7,6 @@
 * IP: 61.14.233.93
 * DNS  Record 
 
-
-
 | NAME   | TYPE  | CONTENT                                        |
 | ------ | ------ | --------------------------------------------------------- |
 | _dmarc | TXT    | v=DMARC1; p=reject; rua=mailto:postmaster@anthanh264.site |
@@ -49,12 +47,12 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot --apache
 sudo certbot renew --dry-run
 ```
-### MAIL SERVER SETUP
-#### Set Hostname
+## MAIL SERVER SETUP
+### Set Hostname
 ```
 hostnamectl set-hostname mail.anthanh264.site
 ```
-#### Sử dụng mysql tạo database maildb, tạo user mailuser và cấp quyền
+### Sử dụng mysql tạo database maildb, tạo user mailuser và cấp quyền
 ```
 mysql -u root – p 
 CREATE DATABASE maildb;
@@ -62,8 +60,9 @@ CREATE USER 'mailuser'@'localhost' IDENTIFIED BY 'mailPWD';
 GRANT ALL PRIVILEGES ON maildb.* TO 'mailuser'@'localhost';  
 FLUSH PRIVILEGES;
 ```
-#### Sử dụng mysql trên database maildb để tạo các bảng
+### Sử dụng mysql trên database maildb để tạo các bảng
 ```
+USE maildb;
 ### Table Virtual_Status
 CREATE TABLE virtual_Status(
 	status_id INT NOT NULL,
@@ -106,9 +105,8 @@ FOREIGN KEY (status_id) REFERENCES virtual_Status(status_id) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ```
-#### Thêm dữ liệu vào các bảng: Chú ý đổi anthanh264.site thành tên domain của bạn
+### Thêm dữ liệu vào các bảng: Chú ý đổi anthanh264.site thành tên domain của bạn
 ```
-
 INSERT INTO virtual_Status (status_id,status_desc) VALUES ('1','Enable');
 
 INSERT INTO virtual_Domains (domain_name,domain_desc) VALUES ('anthanh264.site','ANTHANH264.SITE');
@@ -121,12 +119,12 @@ INSERT INTO virtual_Aliases (domain_name,source,destination) VALUES ('anthanh264
 
 EXIT;
 ```
-#### Cài Postfix
+### Cài Postfix
 ```
 sudo apt install postfix postfix-mysql -y
 #Chọn 2 Internet Site điền domain: anthanh264.site 
 ```
-#### Cấu hình postfix
+### Cấu hình postfix
 ```
 systemctl start postfix
 systemctl enable postfix
@@ -134,7 +132,7 @@ cd /etc/postfix/
 mv main.cf main.cf.backup
 vi main.cf 
 ```
-##### Sửa nội dung file main.cf thành như sau: https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/main.cf.md 
+##### Sửa nội dung file main.cf thành như sau: [main.cf](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/main.cf.md )
 
 #### Tạo các file cần thiết cho postfix
 ```
@@ -184,7 +182,7 @@ postmap -q anthanh264.site mysql:/etc/postfix/virtual-domains.cf
 ```
 system restart postfix
 ```
-#### Cấu hình firewall
+### Cấu hình firewall
 ```
 sudo apt install ufw
 ufw enable
@@ -243,20 +241,20 @@ quit
 Connection closed by foreign host.
 ```
 ### DOVECOT
-Tạo thư mục lưu mail và group vmail 
+#### Tạo thư mục lưu mail và group vmail 
 ```
 mkdir /var/mail/anthanh264.site
 groupadd -g 5000 vmail
 useradd -g vmail -u 5000 vmail -d /var/mail
 chown -R vmail:vmail /var/mail/
 ```
-Cài đặt dovecot
+#### Cài đặt dovecot
 ```
 sudo apt install dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd dovecot-mysql -y 
 systemctl restart dovecot
 systemctl enable dovecot
 ```
-Cấu hình dovecot
+#### Cấu hình dovecot
 ```
 vi /etc/dovecot/dovecot.conf
 * Go to line 25 and add protocols = imap pop3 lmtp
@@ -292,7 +290,9 @@ vi /etc/dovecot/conf.d/auth-sql.conf.ext
 args = uid=vmail home=/var/vmail/%d/%n
 
 vi /etc/dovecot/conf.d/10-master.conf
-* Link to sample file https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/10-master.conf.md
+* Link to sample file
+https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/10-master.conf.md
+
 vi /etc/dovecot/conf.d/10-ssl.conf
 * Go to line 6 and edit 
 ssl = no
@@ -333,7 +333,7 @@ user test1@anthanh264.site
 pass test1
 +OK Logged in.
 ```
-#### Roundcube
+## Roundcube
 ```
 sudo apt install -y roundcube
 ````
@@ -384,14 +384,15 @@ File 000-default.conf sẽ có dạng như thế này
 
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
 ```
-#### Restart apache2 để apply cấu hình
+### Restart apache2 để apply cấu hình
 ```
 systemctl restart apache2
 ```
 
 ## FINISHED
+MAIL SERVER UBUNTU WITH POSTFIX, DOVECOT, ROUNDCUBE (Without SSL)
 ## TEST
-Truy cập vào http://mail.anthanh264.site/mail 
+Truy cập vào  http://mail.anthanh264.site/mail
 * Username: test1@anthanh264.site
 * Password: test1
 * Server: mail.anthanh264.site
