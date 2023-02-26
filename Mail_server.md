@@ -273,7 +273,7 @@ password_query = SELECT email as user, password FROM virtual_Users WHERE email='
 
 vi /etc/dovecot/conf.d/10-mail.conf
 * Comment line 30 and add 
-mail_location = mailldir:/var/mail/%d/%n/
+mail_location = maildir:/var/mail/%d/%n/
 * Go to line 114 and uncomment it
 
 vi /etc/dovecot/conf.d/10-auth.conf
