@@ -9,7 +9,7 @@
 # is /etc/mailname.
 #myorigin = /etc/mailname
 
-smtpd_banner = $myhostname ESMTP $mail_name (anthanh264)
+smtpd_banner = $myhostname ESMTP $mail_name (HappyGhost)
 biff = no
 
 # appending .domain is the MUA's job.
@@ -33,9 +33,7 @@ broken_sasl_auth_clients = yes
 smtpd_sasl_authenticated_header = yes
 
 virtual_transport = lmtp:unix:private/dovecot-lmtp
-
-# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
-# information on enabling SSL in the smtp client.
+compatibility_level = 3.6
 
 # Restrictions
 smtpd_helo_restrictions =
@@ -60,25 +58,18 @@ smtpd_relay_restrictions =
         permit_sasl_authenticated,
         defer_unauth_destination
 
-# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
-# information on enabling SSL in the smtp client.
 
+#smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 myhostname = mail.anthanh264.site
-mydomain = anthanh264.site
-myorigin = $mydomain
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
-mydestination = localhost
-relayhost =
-mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
-mailbox_size_limit = 0
-recipient_delimiter = +
+myorigin = /etc/mailname
+mydestination = 
+relayhost = 
+mailbox_size_limit = 
+recipient_delimiter = 
 inet_interfaces = all
-inet_protocols = all
-
-# Handing off local delivery to Dovecot's LMTP, and telling it where to store mail
-virtual_transport = lmtp:unix:private/dovecot-lmtp
-
+inet_protocols = ipv4
 # Virtual domains, users, and aliases
 # These files contain the connection information for the MySQL lookup tables created in the MySQL in the Part 2
 virtual_mailbox_domains = mysql:/etc/postfix/virtual-domains.cf
@@ -111,3 +102,4 @@ unknown_client_reject_code = 550
 unknown_hostname_reject_code = 550
 unverified_recipient_reject_code = 550
 unverified_sender_reject_code = 550
+
