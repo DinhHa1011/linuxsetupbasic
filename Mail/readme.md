@@ -388,13 +388,13 @@ File 000-default.conf sẽ có dạng như thế này
 ```
 systemctl restart apache2
 ```
-## SSL
-### Cài đặt certbot để lấy chứng chỉ từ Let's Encrypt
+## SSL 
+### Cài đặt certbot để lấy chứng chỉ từ Let's Encrypt cấp cho mail.anthanh264.site
 ```
 sudo add-apt-repository ppa:certbot/certbot && apt update
 sudo apt install certbot python3-certbot-apache
 ```
-#### Cấp cho mail.anthanh264.site
+
 ### Chỉnh sửa postfix
 ```
 vi /etc/postfix/main.cf
