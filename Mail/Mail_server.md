@@ -132,7 +132,7 @@ cd /etc/postfix/
 mv main.cf main.cf.backup
 vi main.cf 
 ```
-##### Sửa nội dung file main.cf thành như sau: [main.cf](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/main.cf.md )
+##### Sửa nội dung file main.cf thành như sau: [main.cf](https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/Mail/main.cf )
 
 #### Tạo các file cần thiết cho postfix
 ```
@@ -291,7 +291,7 @@ args = uid=vmail gid=vmail home=/var/vmail/%d/%n
 
 vi /etc/dovecot/conf.d/10-master.conf
 * Link to sample file
-https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/10-master.conf.md
+https://raw.githubusercontent.com/anthanh264/linuxsetupbasic/main/Mail/10-master.conf
 
 vi /etc/dovecot/conf.d/10-ssl.conf
 * Go to line 6 and edit 
@@ -313,7 +313,7 @@ smtpd_sasl_auth_enable = yes
 ```
 #### Restart postfix để apply cấu hình
 ```
-system restart postfix
+systemctl restart postfix
 ```
 #### Test Dovecot
 ```
