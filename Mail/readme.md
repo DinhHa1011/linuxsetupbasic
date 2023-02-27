@@ -388,11 +388,86 @@ File 000-default.conf sẽ có dạng như thế này
 ```
 systemctl restart apache2
 ```
+## SSL
+### Cài đặt certbot để lấy chứng chỉ từ Let's Encrypt
+```
+sudo add-apt-repository ppa:certbot/certbot && apt update
+sudo apt install certbot python3-certbot-apache
+```
+#### Cấp cho mail.anthanh264.site
+### Chỉnh sửa postfix
+```
+vi /etc/postfix/main.cf
+#Thêm những dòng sau vào cuối file. Chú ý nhớ sửa về đúng domain của bạn
+smtpd_use_tls=yes
+smtpd_tls_auth_only = yes
+smtp_tls_security_level = may
+smtpd_tls_security_level = may
+smtpd_tls_cert_file=/etc/letsencrypt/live/mail.anthanh264.site/fullchain.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/mail.anthanh264.site/privkey.pem
+smtpd_sasl_security_options = noanonymous, noplaintext
+smtpd_sasl_tls_security_options = noanonymous
+```
+```
+vi /etc/postfix/master.cf
 
+* Go to line 17 uncomment it (smtp)
+* Add the following lines below line 17
+  -o syslog_name=postfix/submission
+  -o smtpd_tls_security_level=encrypt
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_sasl_type=dovecot
+  -o smtpd_sasl_path=private/auth
+  -o smtpd_reject_unlisted_recipient=no
+  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+  -o milter_macro_daemon_name=ORIGINATING
+  
+* Go to line 37 uncomment it (smtps)
+* Add the following lines below line 37
+  -o syslog_name=postfix/smtps
+  -o smtpd_tls_wrappermode=yes
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_sasl_type=dovecot
+  -o smtpd_sasl_path=private/auth
+  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+  -o milter_macro_daemon_name=ORIGINATING
+```
+### Restart postfix để apply cấu hình
+```
+system restart postfix
+```
+### Chỉnh sửa dovecot
+```
+cd /etc/dovecot/conf.d/
+
+vi 10-master.conf
+* Uncomment lines 22 & 23
+* Uncomment lines 43 & 44
+
+vi 10-ssl.conf
+* Edit line 6: ssl = required
+* Uncomment lines 12 & 13 and edit. Note replace anthanh264.site with your domain 
+ssl_cert=</etc/letsencrypt/live/mail.anthanh264.site/fullchain.pem
+ssl_key=</etc/letsencrypt/live/mail.anthanh264.site/privkey.pem
+
+vi 10-auth.conf
+* Edit line 10: disable_plaintext_auth = yes
+```
+### Restart dovecot để apply cấu hình
+```
+system restart dovecot
+```
+### Mở port 
+```
+ufw allow 465
+ufw allow 587
+ufw allow 993
+ufw allow 995
+```
 ## FINISHED
-MAIL SERVER UBUNTU WITH POSTFIX, DOVECOT, ROUNDCUBE (Without SSL)
+MAIL SERVER UBUNTU WITH POSTFIX, DOVECOT, ROUNDCUBE (With SSL)
 ## TEST
-Truy cập vào  http://mail.anthanh264.site/mail
+Truy cập vào  https://mail.anthanh264.site/mail
 * Username: test1@anthanh264.site
 * Password: test1
 * Server: mail.anthanh264.site
