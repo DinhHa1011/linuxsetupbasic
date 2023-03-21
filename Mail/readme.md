@@ -10,7 +10,7 @@
 | NAME   | TYPE  | CONTENT                                        |
 | ------ | ------ | --------------------------------------------------------- |
 | _dmarc | TXT    | v=DMARC1; p=reject; rua=mailto:postmaster@anthanh264.site |
-| @      | TXT    | v=spf1 a mx ip4:61.14.233.93 ?all                         |
+| @      | TXT    | v=spf1 a mx ip4:61.14.233.93 mx:anthanh264.site ~all                        |
 | @      | MX     | mail.anthanh264.site                                      |
 | mail   | A      | 61.14.233.93                                              |
 | @      | A      | 61.14.233.93                                              |
@@ -388,13 +388,13 @@ File 000-default.conf sẽ có dạng như thế này
 ```
 systemctl restart apache2
 ```
-## SSL 
-### Cài đặt certbot để lấy chứng chỉ từ Let's Encrypt cấp cho mail.anthanh264.site
+## SSL
+### Cài đặt certbot để lấy chứng chỉ từ Let's Encrypt
 ```
 sudo add-apt-repository ppa:certbot/certbot && apt update
 sudo apt install certbot python3-certbot-apache
 ```
-
+#### Cấp cho mail.anthanh264.site
 ### Chỉnh sửa postfix
 ```
 vi /etc/postfix/main.cf
