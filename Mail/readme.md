@@ -471,3 +471,28 @@ Truy cập vào  https://mail.anthanh264.site/mail
 * Username: test1@anthanh264.site
 * Password: test1
 * Server: mail.anthanh264.site
+
+# ADD thêm domain 
+mysql -u root -p
+
+use maildb;
+
+INSERT INTO virtual_Domains (domain_name,domain_desc) VALUES ('hadt.space','HADT.SPACE');
+
+INSERT INTO virtual_Users (domain_name,email,password,fullname,department) VALUES ('hadt.space','test1@hadt.space',TO_BASE64(UNHEX(SHA2('test1', 512))),'Test 1','Test');
+
+INSERT INTO virtual_Users (domain_name,email,password,fullname,department) VALUES ('hadt.space','test2@hadt.space',TO_BASE64(UNHEX(SHA2('test2', 512))),'Test 2','Test');
+
+INSERT INTO virtual_Aliases (domain_name,source,destination) VALUES ('hadt.space','group-test@hadt.space','test1@hadt.space,test2@hadt.space');
+
+EXIT;
+
+
+## Fix lỗi chỗ ko lưu dc mail
+vi  /etc/dovecot/conf.d/auth-sql.conf.ext
+
+Sửa phần userdb về lại như config mail gốc
+userdb {
+  driver = static
+  args = uid=vmail gid=vmail home=/var/vmail/%d/%n
+}
