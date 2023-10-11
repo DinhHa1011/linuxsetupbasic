@@ -69,17 +69,17 @@ VALUES
 INSERT INTO \`maildb\`.\`virtual_Domains\` 
 (\`domain_name\`,\`domain_desc\`) 
 VALUES 
-('anthanh264.site','ANTHANH264.SITE');
+('hadt.space','HADT.SPACE');
 
 INSERT INTO \`maildb\`.\`virtual_Users\` 
 (\`domain_name\`,\`email\`,\`password\`,\`fullname\`,\`department\`) 
 VALUES 
-('anthanh264.site','test1@anthanh264.site','JsZpzQgUrEDlModSshxKpkUNFileTuwwNWoGqRHCOYOq6+EtXaOO7r/BshO+ZQSY34QZGU1aJsfg\r\npQrxVoU8eQ==','Test 1','Test');
+('hadt.space','test1@hadt.space','JsZpzQgUrEDlModSshxKpkUNFileTuwwNWoGqRHCOYOq6+EtXaOO7r/BshO+ZQSY34QZGU1aJsfg\r\npQrxVoU8eQ==','Test 1','Test');
 
 INSERT INTO \`maildb\`.\`virtual_Aliases\` 
 (\`domain_name\`,\`source\`,\`destination\`) 
 VALUES 
-('anthanh264.site','group-test@anthanh264.site','test1@anthanh264.site,test2@anthanh264.site');
+('hadt.space','group-test@hadt.space','test1@hadt.space,test2@hadt.space');
 " | mysql -u root
 echo "Config MYSQL | DONE"
 echo "Configuring Postfix"
