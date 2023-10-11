@@ -1,6 +1,6 @@
 #!/bin/sh
 ############################################
-##### Replace : anthanh264.site = YOUR-DOMAIN  #####
+##### Replace : hadt.space = YOUR-DOMAIN  #####
 ############################################
 hostname --fqdn > /etc/mailname
 echo "Installing programs..."
